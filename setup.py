@@ -17,7 +17,7 @@ if __name__ == "__main__":
         packages=find_packages(),
         install_requires=[
             "numpy", "pandas", "gpxpy",
-            "python-ffmpeg", "geopandas",
+            "ffmpeg-python", "geopandas",
             "contextily", "descartes"
         ],
         url="https://github.com/alexis-mignon/pygpmf"
