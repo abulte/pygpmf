@@ -15,7 +15,7 @@ if __name__ == "__main__":
         long_description_content_type="text/markdown",
         version=__version__,
         packages=find_packages(),
-        install_requires=[
+        requires=[
             "numpy", "pandas", "gpxpy",
             "ffmpeg-python", "geopandas",
             "contextily", "descartes"
