@@ -22,7 +22,7 @@ gps_blocks = gpmf.gps.extract_gps_blocks(stream)
 gps_data = list(map(gpmf.gps.parse_gps_block, gps_blocks))
 ```
 
-We rely on `gpxpy` to easily convert GPS data into GPX segments:  
+We rely on `gpxpy` to easily convert GPS data into GPX segments:
 
 ```python
 import gpxpy
@@ -69,7 +69,14 @@ import gpmf
 
 # Read the binary stream from the file
 stream = gpmf.io.extract_gpmf_stream(my_file)
-gpmf.gps_plot.plot_gps_trace_from_stream(stream)
+plotter = gpmf.gps_plot.GPSPlotter(stream)
+plotter.plot(output_path="./route.png")
 ```
 
 ![GPS Track Image](./images/GH010215.png)
+
+Get the coordinates bounding box from the previous `plotter`:
+
+```python
+bb = plotter.get_bounding_box()
+```
