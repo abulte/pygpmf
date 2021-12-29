@@ -110,7 +110,7 @@ class GPSPlotter():
         # FIXME:
         # /mnt/lvm/backup/share/GoPro-pytube/2021-02-26/gh010039.mp4 already exists, skipping
         # /home/alexandre/pytube-server/pyenv/lib/python3.8/site-packages/geopandas/plotting.py:681: UserWarning: The GeoDataFrame you are attempting to plot is empty. Nothing has been displayed.
-        if df.empty():
+        if df.empty:
             raise ValueError("GeoDataFrame is empty")
 
         self.geodataframe = df
