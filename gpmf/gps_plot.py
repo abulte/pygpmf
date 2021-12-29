@@ -52,15 +52,32 @@ class GPSPlotter():
         q01, q50, q99 = numpy.quantile(x, q=[0.01, 0.5, 0.99])
         return (q50 - (1.1 * (q50 - q01)) < x) & (x < q50 + (1.1 * (q99 - q50)))
 
-    def get_bounding_box(self):
+    def get_bounding_box_geojson(self):
+        """Return bounding box for whole route as a GeoJson (WGS 84)"""
         df = self.build_geodataframe()
         minx, miny, maxx, maxy = df.total_bounds
         return {
-            "minx": minx,
-            "miny": miny,
-            "maxx": maxx,
-            "maxy": maxy,
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [minx, miny],
+                    [minx, maxy],
+                    [maxx, maxy],
+                    [maxx, miny],
+                    [minx, miny],
+                ]]
+            }
         }
+
+    def get_bounding_box(self):
+        """
+        Return bounding box for whole route as array (WGS 84)
+        (minx, miny, maxx, maxy)
+        """
+        df = self.build_geodataframe()
+        return df.total_bounds
 
     def build_geodataframe(self, first_only=False, precision_max=3.0) -> gpd.GeoDataFrame:
         """Build a GeoDataFrame from stream"""
