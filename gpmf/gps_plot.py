@@ -103,10 +103,17 @@ class GPSPlotter():
 
         mask = self.filter_outliers(x) & self.filter_outliers(y)
 
-        self.geodataframe = gpd.GeoDataFrame(
+        df = gpd.GeoDataFrame(
             geometry=gpd.points_from_xy(x[mask], y[mask], crs=LATLON)
         )
 
+        # FIXME:
+        # /mnt/lvm/backup/share/GoPro-pytube/2021-02-26/gh010039.mp4 already exists, skipping
+        # /home/alexandre/pytube-server/pyenv/lib/python3.8/site-packages/geopandas/plotting.py:681: UserWarning: The GeoDataFrame you are attempting to plot is empty. Nothing has been displayed.
+        if df.empty():
+            raise ValueError("GeoDataFrame is empty")
+
+        self.geodataframe = df
         return self.geodataframe
 
     def plot_gps_trace(
@@ -139,6 +146,11 @@ class GPSPlotter():
         color: str, optional (default="tab:red")
             The color used to plot the track.
         """
+
+        # FIXME: close plot
+        # /home/alexandre/pytube-server/pyenv/src/gpmf/gpmf/gps_plot.py:149: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+        #   plt.figure(figsize=figsize)
+
         if map_provider is None:
             map_provider = ctx.providers.OpenTopoMap
 
